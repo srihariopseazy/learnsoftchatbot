@@ -9,8 +9,17 @@ const user_id = "user_" + Math.random().toString(36).substring(2, 9);
 // ── Toggle ──
 chatToggle.onclick = () => {
   chatWindow.classList.toggle('open');
-  if (chatWindow.classList.contains('open') && chatbox.children.length === 0) {
-    setTimeout(() => autoGreet(), 400);
+  if (chatWindow.classList.contains('open')) {
+    // Stop ripple animation when open
+    chatToggle.style.animation = 'none';
+    chatToggle.style.setProperty('--ripple', 'none');
+    chatToggle.classList.add('no-ripple');
+    if (chatbox.children.length === 0) {
+      setTimeout(() => autoGreet(), 400);
+    }
+  } else {
+    // Restart ripple when closed
+    chatToggle.classList.remove('no-ripple');
   }
 };
 
