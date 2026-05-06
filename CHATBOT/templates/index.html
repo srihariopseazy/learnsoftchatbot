@@ -50,57 +50,87 @@
     z-index: 999;
 }
 
-#toggle-wrapper::before {
-    content: '';
-    position: absolute;
-    inset: -4px;
-    border-radius: 50%;
-    background: conic-gradient(
-        #ff0000, #ff7700, #ffff00,
-        #00ff00, #0077ff, #8800ff,
-        #ff0000
-    );
-    animation: rainbowSpin 2s linear infinite;
-    z-index: -1;
+#toggle-wrapper {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 999;
 }
 
-#toggle-wrapper::after {
-    content: '';
-    position: absolute;
-    inset: -4px;
+#chat-toggle {
+    position: relative;
+    width: 68px;
+    height: 68px;
     border-radius: 50%;
-    background: conic-gradient(
-        #ff0000, #ff7700, #ffff00,
-        #00ff00, #0077ff, #8800ff,
-        #ff0000
-    );
-    animation: rainbowSpin 2s linear infinite;
-    filter: blur(6px);
-    opacity: 0.6;
-    z-index: -2;
+    background: black;
+    border: none;
+    cursor: pointer;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
 }
 
-@keyframes rainbowSpin {
+#chat-toggle img {
+    width: 68px;
+    height: 68px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+/* Ring 1 */
+.ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    animation: spinRing 3s linear infinite;
+}
+
+.ring-1 {
+    inset: -8px;
+    border-top-color: #F5A623;
+    border-right-color: #F5A623;
+    animation-duration: 2s;
+}
+
+.ring-2 {
+    inset: -14px;
+    border-bottom-color: #ff6b35;
+    border-left-color: #ff6b35;
+    animation-duration: 3s;
+    animation-direction: reverse;
+}
+
+.ring-3 {
+    inset: -20px;
+    border-top-color: #8b5cf6;
+    border-right-color: #8b5cf6;
+    animation-duration: 4s;
+}
+
+@keyframes spinRing {
     from { transform: rotate(0deg); }
     to   { transform: rotate(360deg); }
 }
 
-/* ── Triple ripple waves ── */
-.ripple {
+/* Online tooltip */
+.online-tag {
     position: absolute;
-    inset: -4px;
-    border-radius: 50%;
-    border: 3px solid #F5A623;
-    opacity: 0;
-    animation: rippleWave 2.5s ease-out infinite;
-}
-
-.ripple:nth-child(2) { animation-delay: 0.8s; }
-.ripple:nth-child(3) { animation-delay: 1.6s; }
-
-@keyframes rippleWave {
-    0%   { transform: scale(1); opacity: 0.8; }
-    100% { transform: scale(2.2); opacity: 0; }
+    top: -36px;
+    right: 0;
+    background: white;
+    color: #222;
+    font-size: 0.72rem;
+    font-family: 'Sora', sans-serif;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .badge { display: none; }
@@ -365,9 +395,10 @@
 </div>
 
 <div id="toggle-wrapper">
-  <div class="ripple"></div>
-  <div class="ripple"></div>
-  <div class="ripple"></div>
+  <div class="ring ring-1"></div>
+  <div class="ring ring-2"></div>
+  <div class="ring ring-3"></div>
+  <div class="online-tag">🟢 We're online!</div>
   <button id="chat-toggle">
     <img src="/static/logo.webp">
   </button>
