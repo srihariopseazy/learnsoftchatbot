@@ -243,6 +243,19 @@ def view_leads():
     leads = list(leads_col.find({}, {"_id": 0}))
     return jsonify(leads)
 
+@app.route("/save_lead", methods=["POST"])
+def save_lead():
+    data = request.get_json()
+    lead = {
+        "name":   data.get("name", ""),
+        "phone":  data.get("phone", ""),
+        "email":  data.get("email", ""),
+        "course": data.get("course", ""),
+        "time":   datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    }
+    leads_col.insert_one(lead)
+    return jsonify({"status": "saved"})
+
 # ─────────────────────────────────────────
 # RUN
 # ─────────────────────────────────────────
