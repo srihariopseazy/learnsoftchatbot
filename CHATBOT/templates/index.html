@@ -42,33 +42,68 @@
   #chat-toggle:hover { transform: scale(1.1); box-shadow: 0 8px 32px rgba(245,166,35,0.8); }
   #chat-toggle img { width: 68px; height: 68px; object-fit: cover; border-radius: 50%; }
 
-  .badge {
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    width: 28px;
-    height: 28px;
-    background: linear-gradient(135deg, #ef4444, #dc2626);
-    border-radius: 50%;
-    font-size: 14px;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 8px rgba(239,68,68,0.6);
-    animation: bellRing 1.5s infinite;
-    border: 2px solid white;
+  /* ── Rainbow spinning ring ── */
+#toggle-wrapper {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 999;
 }
 
-@keyframes bellRing {
-    0%   { transform: rotate(0deg) scale(1); }
-    10%  { transform: rotate(-15deg) scale(1.1); }
-    20%  { transform: rotate(15deg) scale(1.1); }
-    30%  { transform: rotate(-10deg) scale(1.1); }
-    40%  { transform: rotate(10deg) scale(1.1); }
-    50%  { transform: rotate(0deg) scale(1); }
-    100% { transform: rotate(0deg) scale(1); }
+#toggle-wrapper::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    background: conic-gradient(
+        #ff0000, #ff7700, #ffff00,
+        #00ff00, #0077ff, #8800ff,
+        #ff0000
+    );
+    animation: rainbowSpin 2s linear infinite;
+    z-index: -1;
 }
+
+#toggle-wrapper::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    background: conic-gradient(
+        #ff0000, #ff7700, #ffff00,
+        #00ff00, #0077ff, #8800ff,
+        #ff0000
+    );
+    animation: rainbowSpin 2s linear infinite;
+    filter: blur(6px);
+    opacity: 0.6;
+    z-index: -2;
+}
+
+@keyframes rainbowSpin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+/* ── Triple ripple waves ── */
+.ripple {
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 3px solid #F5A623;
+    opacity: 0;
+    animation: rippleWave 2.5s ease-out infinite;
+}
+
+.ripple:nth-child(2) { animation-delay: 0.8s; }
+.ripple:nth-child(3) { animation-delay: 1.6s; }
+
+@keyframes rippleWave {
+    0%   { transform: scale(1); opacity: 0.8; }
+    100% { transform: scale(2.2); opacity: 0; }
+}
+
+.badge { display: none; }
 
   #toggle-wrapper { position: fixed; bottom: 24px; right: 24px; z-index: 999; }
 
@@ -330,10 +365,12 @@
 </div>
 
 <div id="toggle-wrapper">
+  <div class="ripple"></div>
+  <div class="ripple"></div>
+  <div class="ripple"></div>
   <button id="chat-toggle">
     <img src="/static/logo.webp">
   </button>
-  <div class="badge" id="notif-badge">🔔</div>
 </div>
 
 <div id="chat-window">
