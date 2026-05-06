@@ -247,11 +247,14 @@ def view_leads():
 def save_lead():
     data = request.get_json()
     lead = {
-        "name":   data.get("name", ""),
-        "phone":  data.get("phone", ""),
-        "email":  data.get("email", ""),
-        "course": data.get("course", ""),
-        "time":   datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        "name":    data.get("name", ""),
+        "phone":   data.get("phone", ""),
+        "email":   data.get("email", ""),
+        "course":  data.get("course", ""),
+        "city":    data.get("city", ""),
+        "state":   data.get("state", ""),
+        "country": data.get("country", ""),
+        "time":    datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     }
     leads_col.insert_one(lead)
     return jsonify({"status": "saved"})
