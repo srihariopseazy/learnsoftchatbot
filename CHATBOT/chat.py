@@ -75,7 +75,7 @@ def build_category_list():
     lines = "📚 <b>Choose a Course Category:</b><br><br>"
     for key, val in COURSE_CATEGORIES.items():
         lines += f"<b>{key}.</b> {val['name']}<br>"
-    lines += "<br>Type a number (1–8) to see courses."
+    lines += "<br>Type a number (1–8) or category name."
     return lines
 
 def build_course_list(category_key):
@@ -83,7 +83,7 @@ def build_course_list(category_key):
     lines = f"{cat['name']} — <b>Courses:</b><br><br>"
     for i, course in enumerate(cat["courses"], 1):
         lines += f"<b>{i}.</b> {course}<br>"
-    lines += "<br>Type the <b>course number</b> to select, or type <b>back</b>."
+    lines += "<br>Type the <b>number</b> or <b>course name</b> to select, or type <b>back</b>."
     return lines
 
 # ─────────────────────────────────────────
@@ -107,7 +107,7 @@ def get_response(user_id, message):
         session["course"] = ""
         return build_category_list()
 
-    if msg in ["restart", "reset"]:
+    if msg in ["restart", "reset", "new chat"]:
         user_sessions.pop(user_id)
         return "🔄 Restarted! Type <b>hello</b> to begin."
 
@@ -139,27 +139,41 @@ def get_response(user_id, message):
 
     # Category selection
     if session["step"] == "category":
+        # Match by number
         if msg in COURSE_CATEGORIES:
             session["category"] = msg
             session["step"] = "course"
             return build_course_list(msg)
-        else:
-            return "❌ Type a number between <b>1 and 8</b>.<br><br>" + build_category_list()
+        # Match by category name
+        for key, val in COURSE_CATEGORIES.items():
+            if msg in val["name"].lower():
+                session["category"] = key
+                session["step"] = "course"
+                return build_course_list(key)
+        return "❌ Type a number between <b>1 and 8</b> or category name.<br><br>" + build_category_list()
 
     # Course selection
     if session["step"] == "course":
         cat = COURSE_CATEGORIES.get(session["category"], {})
         courses = cat.get("courses", [])
+        # Match by number
         if msg.isdigit() and 1 <= int(msg) <= len(courses):
             session["course"] = courses[int(msg) - 1]
             session["step"] = "name"
             return f"✅ You selected <b>{session['course']}</b>.<br><br>Please enter your <b>full name</b>:"
+        # Back
         elif msg == "back":
             session["step"] = "category"
             session["category"] = ""
             return build_category_list()
+        # Match by typing course name
         else:
-            return f"❌ Type a number (1–{len(courses)}) or <b>back</b>."
+            matched = next((c for c in courses if msg in c.lower()), None)
+            if matched:
+                session["course"] = matched
+                session["step"] = "name"
+                return f"✅ You selected <b>{matched}</b>.<br><br>Please enter your <b>full name</b>:"
+            return f"❌ Type a number (1–{len(courses)}), course name, or <b>back</b>."
 
     # Name
     if session["step"] == "name":
@@ -169,10 +183,10 @@ def get_response(user_id, message):
         session["step"] = "phone"
         return f"👍 Hi <b>{session['name']}</b>!<br><br>📞 Enter your <b>phone number</b>:"
 
-    # Phone
+    # Phone - exactly 10 digits
     if session["step"] == "phone":
         phone = message.strip().replace(" ", "").replace("-", "").replace("+91", "")
-        if not phone.isdigit() or len(phone) < 10:
+        if not phone.isdigit() or len(phone) != 10:
             return "❌ Enter a valid <b>10-digit phone number</b>."
         session["phone"] = phone
         session["step"] = "email"
@@ -199,7 +213,10 @@ def get_response(user_id, message):
             f"🎉 <b>Thank you, {lead['name']}!</b><br><br>"
             f"✅ Registered for <b>{lead['course']}</b>.<br>"
             "📲 Our counsellor will contact you within <b>24 hours</b>.<br><br>"
-            "Type <b>hello</b> to explore more courses!"
+            "<button onclick=\"document.getElementById('message-input').value='hello'; sendMessage();\" "
+            "style='background:#F5A623; color:white; border:none; padding:10px 20px; "
+            "border-radius:25px; cursor:pointer; font-family:Sora,sans-serif; "
+            "font-size:0.85rem; margin-top:8px;'>🔄 Start New Chat</button>"
         )
 
     return "Type <b>hello</b> to get started! 👋"
