@@ -27,6 +27,12 @@
     z-index: 999;
   }
 
+ #chat-toggle.no-ripple::before,
+#chat-toggle.no-ripple::after {
+    animation: none;
+    opacity: 0;
+}
+
   #chat-toggle {
     position: relative;
     width: 68px;
