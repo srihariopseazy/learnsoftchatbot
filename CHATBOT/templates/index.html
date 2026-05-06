@@ -20,36 +20,6 @@
   .hero { text-align: center; color: white; }
   .hero p { margin-top: 10px; color: rgba(255,255,255,0.6); font-size: 1rem; }
 
-  #chat-toggle {
-    position: fixed;
-    bottom: 28px;
-    right: 28px;
-    width: 68px;
-    height: 68px;
-    border-radius: 50%;
-    background: black;
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 6px 24px rgba(245,166,35,0.5);
-    transition: transform 0.2s, box-shadow 0.2s;
-    z-index: 999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 8px;
-  }
-
-  #chat-toggle:hover { transform: scale(1.1); box-shadow: 0 8px 32px rgba(245,166,35,0.8); }
-  #chat-toggle img { width: 68px; height: 68px; object-fit: cover; border-radius: 50%; }
-
-  /* ── Rainbow spinning ring ── */
-#toggle-wrapper {
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    z-index: 999;
-}
-
 #toggle-wrapper {
     position: fixed;
     bottom: 24px;
@@ -79,58 +49,24 @@
     border-radius: 50%;
 }
 
-/* Ring 1 */
-.ring {
+#chat-toggle::before,
+#chat-toggle::after {
+    content: '';
     position: absolute;
+    inset: 0;
     border-radius: 50%;
-    border: 3px solid transparent;
-    animation: spinRing 3s linear infinite;
+    border: 2.5px solid #F5A623;
+    animation: rippleWave 2s ease-out infinite;
+    pointer-events: none;
 }
 
-.ring-1 {
-    inset: -8px;
-    border-top-color: #F5A623;
-    border-right-color: #F5A623;
-    animation-duration: 2s;
+#chat-toggle::after {
+    animation-delay: 1s;
 }
 
-.ring-2 {
-    inset: -14px;
-    border-bottom-color: #ff6b35;
-    border-left-color: #ff6b35;
-    animation-duration: 3s;
-    animation-direction: reverse;
-}
-
-.ring-3 {
-    inset: -20px;
-    border-top-color: #8b5cf6;
-    border-right-color: #8b5cf6;
-    animation-duration: 4s;
-}
-
-@keyframes spinRing {
-    from { transform: rotate(0deg); }
-    to   { transform: rotate(360deg); }
-}
-
-/* Online tooltip */
-.online-tag {
-    position: absolute;
-    top: -36px;
-    right: 0;
-    background: white;
-    color: #222;
-    font-size: 0.72rem;
-    font-family: 'Sora', sans-serif;
-    font-weight: 600;
-    padding: 4px 10px;
-    border-radius: 20px;
-    box-shadow: 0 3px 12px rgba(0,0,0,0.15);
-    white-space: nowrap;
-    display: flex;
-    align-items: center;
-    gap: 5px;
+@keyframes rippleWave {
+    0%   { transform: scale(1); opacity: 1; }
+    100% { transform: scale(2.2); opacity: 0; }
 }
 
 .badge { display: none; }
@@ -395,10 +331,6 @@
 </div>
 
 <div id="toggle-wrapper">
-  <div class="ring ring-1"></div>
-  <div class="ring ring-2"></div>
-  <div class="ring ring-3"></div>
-  <div class="online-tag">🟢 We're online!</div>
   <button id="chat-toggle">
     <img src="/static/logo.webp">
   </button>
