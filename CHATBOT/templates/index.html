@@ -44,19 +44,31 @@
 
   .badge {
     position: absolute;
-    top: -4px;
-    right: -4px;
-    width: 20px;
-    height: 20px;
-    background: #ef4444;
+    top: -8px;
+    right: -8px;
+    width: 28px;
+    height: 28px;
+    background: linear-gradient(135deg, #ef4444, #dc2626);
     border-radius: 50%;
-    font-size: 11px;
-    font-weight: 700;
+    font-size: 14px;
     color: white;
     display: flex;
     align-items: center;
     justify-content: center;
-  }
+    box-shadow: 0 2px 8px rgba(239,68,68,0.6);
+    animation: bellRing 1.5s infinite;
+    border: 2px solid white;
+}
+
+@keyframes bellRing {
+    0%   { transform: rotate(0deg) scale(1); }
+    10%  { transform: rotate(-15deg) scale(1.1); }
+    20%  { transform: rotate(15deg) scale(1.1); }
+    30%  { transform: rotate(-10deg) scale(1.1); }
+    40%  { transform: rotate(10deg) scale(1.1); }
+    50%  { transform: rotate(0deg) scale(1); }
+    100% { transform: rotate(0deg) scale(1); }
+}
 
   #toggle-wrapper { position: fixed; bottom: 24px; right: 24px; z-index: 999; }
 
