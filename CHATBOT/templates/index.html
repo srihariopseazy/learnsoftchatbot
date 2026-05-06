@@ -10,57 +10,41 @@
 
   body {
     font-family: 'Sora', sans-serif;
-    background: #0d1117;
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
-  .hero {
-    text-align: center;
-    color: white;
-  }
+  .hero { text-align: center; color: white; }
+  .hero p { margin-top: 10px; color: rgba(255,255,255,0.6); font-size: 1rem; }
 
-  .hero p {
-    margin-top: 10px;
-    color: rgba(255,255,255,0.6);
-    font-size: 1rem;
-  }
-
-  /* ── Toggle Button ── */
-  #chat-toggle {
+  #toggle-wrapper {
     position: fixed;
-    bottom: 28px;
-    right: 28px;
-    width: 68px;
-    height: 68px;
+    bottom: 24px;
+    right: 24px;
+    z-index: 999;
+  }
+
+  #chat-toggle {
+    width: 64px;
+    height: 64px;
     border-radius: 50%;
-    background: black;
+    background: #F5A623;
     border: none;
     cursor: pointer;
     box-shadow: 0 6px 24px rgba(245,166,35,0.5);
     transition: transform 0.2s, box-shadow 0.2s;
-    z-index: 999;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 8px;
   }
 
-  #chat-toggle:hover {
-    transform: scale(1.1);
-    box-shadow: 0 8px 32px rgba(245,166,35,0.8);
-  }
+  #chat-toggle:hover { transform: scale(1.1); }
+  #chat-toggle img { width: 44px; height: 44px; object-fit: contain; border-radius: 50%; background: white; padding: 4px; }
 
-  #chat-toggle img {
-    width: 40px;
-    height: 40px;
-    object-fit: contain;
-    border-radius: 50%;
-  }
-
-  /* ── Badge ── */
   .badge {
     position: absolute;
     top: -4px;
@@ -77,25 +61,17 @@
     justify-content: center;
   }
 
-  #toggle-wrapper {
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    z-index: 999;
-  }
-
-  /* ── Chat Window ── */
   #chat-window {
     position: fixed;
     bottom: 100px;
     right: 24px;
     width: 370px;
-    height: 560px;
-    background: #ffffff;
+    height: 580px;
+    background: #0d1117;
     border-radius: 20px;
     display: none;
     flex-direction: column;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
     overflow: hidden;
     z-index: 998;
     animation: slideUp 0.3s ease;
@@ -108,7 +84,6 @@
 
   #chat-window.open { display: flex; }
 
-  /* ── Header ── */
   .chat-header {
     background: linear-gradient(135deg, #F5A623, #e8920f);
     color: white;
@@ -123,18 +98,17 @@
     width: 42px;
     height: 42px;
     border-radius: 50%;
-    background: black;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
     overflow: hidden;
     padding: 0;
   }
 
-  .avatar img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-  }
-
-  .header-info .name   { font-weight: 600; font-size: 0.95rem; color: white; }
+  .avatar img { width: 42px; height: 42px; object-fit: cover; }
+  .header-info .name { font-weight: 600; font-size: 0.95rem; color: white; }
   .header-info .status { font-size: 0.72rem; opacity: 0.9; margin-top: 2px; }
 
   #close-chat {
@@ -155,7 +129,6 @@
 
   #close-chat:hover { background: rgba(255,255,255,0.35); }
 
-  /* ── Chatbox ── */
   #chatbox {
     flex: 1;
     padding: 16px;
@@ -163,11 +136,11 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-    background: #f8f8fb;
+    background: #0d1117;
   }
 
   #chatbox::-webkit-scrollbar { width: 4px; }
-  #chatbox::-webkit-scrollbar-thumb { background: #ddd; border-radius: 4px; }
+  #chatbox::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
 
   .message { display: flex; align-items: flex-end; gap: 8px; }
   .message.user { flex-direction: row-reverse; }
@@ -180,12 +153,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 13px;
     overflow: hidden;
   }
 
-  .message.bot  .msg-avatar { background: white; padding: 2px; }
-  .message.user .msg-avatar { background: #e0e0e0; }
+  .message.bot .msg-avatar { background: white; padding: 2px; }
+  .message.bot .msg-avatar img { width: 100%; height: 100%; object-fit: contain; }
+  .message.user .msg-avatar { background: #444; font-size: 13px; }
 
   .bubble {
     padding: 10px 14px;
@@ -202,13 +175,12 @@
   }
 
   .bot .bubble {
-    background: #ffffff;
-    color: #222;
+    background: #1a1a2e;
+    color: #ffffff;
     border-bottom-left-radius: 4px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
   }
 
-  /* Typing dots */
   .typing-dots {
     display: flex;
     gap: 4px;
@@ -229,20 +201,20 @@
 
   @keyframes bounce {
     0%, 60%, 100% { transform: translateY(0); }
-    30%            { transform: translateY(-6px); }
+    30% { transform: translateY(-6px); }
   }
 
-  /* Quick chips */
   .chips-row {
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
-    padding: 4px 16px 8px;
-    background: white;
+    padding: 6px 16px 8px;
+    background: #0d1117;
+    border-top: 1px solid #1a1a2e;
   }
 
   .chip {
-    background: white;
+    background: transparent;
     border: 1.5px solid #F5A623;
     color: #F5A623;
     border-radius: 20px;
@@ -251,34 +223,37 @@
     cursor: pointer;
     font-family: 'Sora', sans-serif;
     transition: all 0.15s;
+    text-decoration: none;
+    display: inline-block;
   }
 
   .chip:hover { background: #F5A623; color: white; }
 
-  /* ── Input Area ── */
   .input-area {
     display: flex;
     align-items: center;
     padding: 10px 12px;
     gap: 8px;
-    border-top: 1px solid #eee;
-    background: white;
+    border-top: 1px solid #1a1a2e;
+    background: #0d1117;
     flex-shrink: 0;
   }
 
   #message-input {
     flex: 1;
     padding: 10px 16px;
-    border: 1.5px solid #e0e0e0;
+    border: 1.5px solid #333;
     border-radius: 25px;
     font-family: 'Sora', sans-serif;
     font-size: 0.875rem;
     outline: none;
     transition: border-color 0.2s;
-    background: #f8f8fb;
+    background: #1a1a2e;
+    color: white;
   }
 
-  #message-input:focus { border-color: #F5A623; background: white; }
+  #message-input::placeholder { color: #666; }
+  #message-input:focus { border-color: #F5A623; }
 
   .send-btn {
     width: 44px;
@@ -298,6 +273,23 @@
   }
 
   .send-btn:hover { transform: scale(1.08); }
+
+  .powered-by {
+    text-align: center;
+    padding: 5px;
+    background: #0d1117;
+    font-size: 0.68rem;
+    color: #555;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    border-top: 1px solid #1a1a2e;
+    flex-shrink: 0;
+  }
+
+  .powered-by img { height: 14px; object-fit: contain; }
+  .powered-by span { color: #F5A623; font-weight: 600; }
 </style>
 </head>
 
@@ -307,20 +299,18 @@
   <p>500K+ Professionals Trained · 200+ IT Courses</p>
 </div>
 
-<!-- Toggle -->
 <div id="toggle-wrapper">
   <button id="chat-toggle">
-  <img src="/static/logo.webp" style="width: 68px; height: 68px; object-fit:cover;">
-</button>
+    <img src="/static/logo.webp" alt="LearnSoft">
+  </button>
   <div class="badge" id="notif-badge">1</div>
 </div>
 
-<!-- Chat window -->
 <div id="chat-window">
   <div class="chat-header">
-   <div class="avatar">
-  <img src="/static/logo.webp" style="width:42px; height:42px; object-fit:cover;">
-</div>
+    <div class="avatar">
+      <img src="/static/logo.webp" alt="LearnSoft">
+    </div>
     <div class="header-info">
       <div class="name">LearnSoft Assistant</div>
       <div class="status">🟢 Online · Replies instantly</div>
@@ -330,15 +320,20 @@
 
   <div id="chatbox"></div>
 
-  <!-- Quick reply chips -->
-  <div class="chips-row" id="chips-row">
-  <a href="https://www.learnsoft.org/contact" target="_blank" class="chip">📞 Contact Us</a>
-  <button class="chip" onclick="sendChip('hello')">🎓 Explore Courses</button>
-</div>
+  <div class="chips-row">
+    <a href="https://www.learnsoft.org/contact" target="_blank" class="chip">📞 Contact Us</a>
+    <button class="chip" onclick="sendChip('hello')">🎓 Explore Courses</button>
+  </div>
 
   <div class="input-area">
     <input type="text" id="message-input" placeholder="Type a message..." autocomplete="off">
     <button class="send-btn" onclick="sendMessage()">➤</button>
+  </div>
+
+  <div class="powered-by">
+    Powered by
+    <img src="/static/opseazy.png" alt="Opseazy">
+    <span>Opseazy</span>
   </div>
 </div>
 
