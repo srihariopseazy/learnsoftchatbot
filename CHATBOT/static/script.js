@@ -163,8 +163,8 @@ async function sendMessage() {
     addBotMessage(`👍 Hi <b>${userName}</b>!<br><br>📞 Please enter your <b>10-digit phone number</b>:`);
 
   } else if (currentStep === "phone") {
-    const phone = message.replace(/[\s\-\+91]/g, '');
-    if (!/^\d{10}$/.test(phone)) {
+    const phone = message.replace(/[\s\-\(\)]/g, '').replace(/^\+91/, '').replace(/^91/, '');
+if (!/^\d{10}$/.test(phone)) {
       addBotMessage("❌ Please enter a valid <b>10-digit phone number</b>.");
       return;
     }
